@@ -1,0 +1,61 @@
+using UnityEngine;
+
+public class CoolKidModz : MonoBehaviour
+{
+    private bool menuOpen = false;
+    private int selectedTab = 0;
+
+    private string[] tabs =
+    {
+        "MAIN",
+        "OP",
+        "VISUALS",
+        "COSMETICS",
+        "MOVEMENT",
+        "SETTINGS",
+        "ABOUT"
+    };
+
+    private GUIStyle titleStyle;
+    private GUIStyle buttonStyle;
+
+    private void Update()
+    {
+        if (OVRInput.GetDown(OVRInput.Button.Two))
+            menuOpen = !menuOpen;
+    }
+
+    private void OnGUI()
+    {
+        if (!menuOpen) return;
+
+        GUI.backgroundColor = Color.black;
+
+        GUILayout.BeginArea(new Rect(20, 20, 320, 500));
+
+        GUI.color = new Color(0.7f, 0.2f, 1f);
+        GUILayout.Label("COOLKIDMODZ");
+
+        GUI.color = Color.white;
+
+        foreach (string tab in tabs)
+        {
+            GUI.backgroundColor =
+                tab == "OP" ? Color.red :
+                new Color(0.3f, 0.1f, 0.5f);
+
+            if (GUILayout.Button(tab, GUILayout.Height(40)))
+            {
+                selectedTab =
+                    System.Array.IndexOf(tabs, tab);
+            }
+        }
+
+        GUI.backgroundColor = Color.black;
+
+        GUILayout.Space(15);
+        GUILayout.Label("Selected: " + tabs[selectedTab]);
+
+        GUILayout.EndArea();
+    }
+}
